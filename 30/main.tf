@@ -19,7 +19,7 @@ resource "helm_release" "grafana" {
   name             = "grafana"
   repository       = "https://grafana.github.io/helm-charts"
   chart            = "grafana"
-  version          = "7.3.12"
+  version          = "8.5.1"
   namespace        = "observability"
 
   values = [file("${path.module}/values/grafana.yaml")]
