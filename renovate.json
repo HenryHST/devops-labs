@@ -23,9 +23,6 @@
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
   "assignees": ["@henryhst"]
-  "kubernetes": {
-    "fileMatch": ["k8s/.+\\.yaml$"]
-  },
   "configMigration": true,
   "platformCommit": "enabled",
   "lockFileMaintenance": {
