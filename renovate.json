@@ -32,6 +32,11 @@
     "groupName": "non-major dependencies",
     "groupSlug": "minor-patch"
   },
+  {
+  "kubernetes": {
+    "fileMatch": ["\\.yaml$"]
+  }
+  },
   "vulnerabilityAlerts": {
     "labels": [
       "security"
