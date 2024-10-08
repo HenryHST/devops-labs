@@ -20,8 +20,9 @@
   "commitBodyTable": true,
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
+  "assignees": ["@henryhst"]
   "kubernetes": {
-    "fileMatch": "\\.yaml$"]
+    "fileMatch": ["\\.yaml$"]
   },
   "configMigration": true,
   "platformCommit": "enabled",
