@@ -20,6 +20,9 @@
   "commitBodyTable": true,
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
+  "kubernetes": {
+    "fileMatch": "\\.yaml$"]
+  },
   "configMigration": true,
   "platformCommit": "enabled",
   "lockFileMaintenance": {
