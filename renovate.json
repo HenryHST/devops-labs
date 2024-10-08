@@ -8,11 +8,6 @@
   "labels": [
     "dependencies"
   ],
-  "schedule": [
-    "after 10pm every weekday",
-    "before 5am every weekday",
-    "every weekend"
-  ],
   "timezone": "Europe/Berlin",
   "rangeStrategy": "bump",
   "automerge": true,
