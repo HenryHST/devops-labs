@@ -17,7 +17,7 @@
   "commitBodyTable": true,
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
-  "assignees": ["@henryhst"]
+  "assignees": ["@henryhst"],
   "configMigration": true,
   "platformCommit": "enabled",
   "lockFileMaintenance": {
