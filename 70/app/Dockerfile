@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 # Install confluent-kafka
 RUN pip install confluent-kafka
