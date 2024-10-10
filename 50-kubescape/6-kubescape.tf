@@ -3,7 +3,7 @@ resource "helm_release" "kubescape" {
   name       = "kubescape"
   repository = "https://kubescape.github.io/helm-charts"
   chart      = "kubescape-operator"
-  version    = "1.22.4"
+  version    = "1.22.5"
   namespace  = "kubescape"
   create_namespace = true
 
