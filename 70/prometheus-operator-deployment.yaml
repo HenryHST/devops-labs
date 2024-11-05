@@ -56758,7 +56758,7 @@ spec:
         env:
         - name: GOGC
           value: "30"
-        image: quay.io/prometheus-operator/prometheus-operator:v0.77.2
+        image: quay.io/prometheus-operator/prometheus-operator:v0.78.0
         name: prometheus-operator
         ports:
         - containerPort: 8080
