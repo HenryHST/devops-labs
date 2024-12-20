@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: dev/apps
-    repoURL: https://github.com/aminrj/10-gitops.git
+    repoURL: https://github.com/henryhst/gitops-argo-apps.git
     targetRevision: HEAD
   destination:
     namespace: default

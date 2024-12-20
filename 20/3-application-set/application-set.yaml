@@ -20,7 +20,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/aminrj/10-gitops.git
+        repoURL: https://github.com/henryhst/gitops-argo-apps.git
         targetRevision: HEAD
         path: dev/apps/{{name}}
       destination:
