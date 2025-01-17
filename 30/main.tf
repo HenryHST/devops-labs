@@ -19,7 +19,7 @@ resource "helm_release" "grafana" {
   name             = "grafana"
   repository       = "https://grafana.github.io/helm-charts"
   chart            = "grafana"
-  version          = "8.8.3"
+  version          = "8.8.4"
   namespace        = "observability"
 
   values = [file("${path.module}/values/grafana.yaml")]
@@ -31,7 +31,7 @@ resource "helm_release" "loki" {
   name       = "loki"
   repository = "https://grafana.github.io/helm-charts"
   chart      = "loki"
-  version    = "6.24.0"
+  version    = "6.25.0"
   namespace  = "observability"
 
   values = [file("${path.module}/values/loki.yaml")]
