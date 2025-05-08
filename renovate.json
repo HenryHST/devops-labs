@@ -17,7 +17,9 @@
   "commitBodyTable": true,
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
-  "assignees": ["@henryhst"],
+  "assignees": [
+    "@henryhst"
+  ],
   "configMigration": true,
   "platformCommit": "enabled",
   "lockFileMaintenance": {
@@ -33,7 +35,9 @@
     "groupSlug": "minor-patch"
   },
   "kubernetes": {
-    "fileMatch": ["\\.yaml$"]
+    "managerFilePatterns": [
+      "/\\.yaml$/"
+    ]
   },
   "vulnerabilityAlerts": {
     "labels": [
