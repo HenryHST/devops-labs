@@ -31,7 +31,7 @@ resource "helm_release" "loki" {
   name       = "loki"
   repository = "https://grafana.github.io/helm-charts"
   chart      = "loki"
-  version    = "6.30.0"
+  version    = "6.30.1"
   namespace  = "observability"
 
   values = [file("${path.module}/values/loki.yaml")]
@@ -43,7 +43,7 @@ resource "helm_release" "promtail" {
   name       = "promtail"
   repository = "https://grafana.github.io/helm-charts"
   chart      = "promtail"
-  version    = "6.16.6"
+  version    = "6.17.0"
   namespace  = "observability"
 
   values = [file("${path.module}/values/promtail.yaml")]
