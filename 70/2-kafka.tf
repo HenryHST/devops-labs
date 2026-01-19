@@ -3,7 +3,7 @@ resource "helm_release" "strimzi-cluster-operator" {
   name = "strimzi-cluster-operator"  
   repository = "https://strimzi.io/charts/"
   chart = "strimzi-kafka-operator"
-  version = "0.49.1"
+  version = "0.50.0"
   namespace = kubernetes_namespace.kafka-namespace.metadata[0].name
   depends_on = [kubernetes_namespace.kafka-namespace]
 }
