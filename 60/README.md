@@ -1,5 +1,6 @@
+# Mermaid Gantt – Beispiele
 
-# My Diagram
+## Software Development Timeline
 ```mermaid
 gantt
     dateFormat YYYY-MM-DD

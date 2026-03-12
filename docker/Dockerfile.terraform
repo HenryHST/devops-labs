@@ -1,0 +1,50 @@
+# syntax=docker/dockerfile:1
+# Multi-stage Dockerfile for HashiCorp Terraform on Alpine (best practices)
+# Build: docker build -f docker/Dockerfile.terraform -t terraform:1.9.6 .
+# Run:   docker run --rm -v "$(pwd):/workspace" -w /workspace terraform:1.9.6 version
+
+ARG TERRAFORM_VERSION=1.9.6
+ARG PRODUCT=terraform
+
+# -----------------------------------------------------------------------------
+# Stage 1: Download and verify Terraform binary
+# -----------------------------------------------------------------------------
+FROM alpine:3.20 AS builder
+ARG TERRAFORM_VERSION
+ARG PRODUCT
+
+RUN apk add --no-cache --virtual .deps gnupg wget unzip \
+    && cd /tmp \
+    && wget -q "https://releases.hashicorp.com/${PRODUCT}/${TERRAFORM_VERSION}/${PRODUCT}_${TERRAFORM_VERSION}_linux_amd64.zip" \
+    && wget -q "https://releases.hashicorp.com/${PRODUCT}/${TERRAFORM_VERSION}/${PRODUCT}_${TERRAFORM_VERSION}_SHA256SUMS" \
+    && wget -q "https://releases.hashicorp.com/${PRODUCT}/${TERRAFORM_VERSION}/${PRODUCT}_${TERRAFORM_VERSION}_SHA256SUMS.sig" \
+    && wget -qO- https://www.hashicorp.com/.well-known/pgp-key.txt | gpg --import \
+    && gpg --verify "${PRODUCT}_${TERRAFORM_VERSION}_SHA256SUMS.sig" "${PRODUCT}_${TERRAFORM_VERSION}_SHA256SUMS" \
+    && grep "${PRODUCT}_${TERRAFORM_VERSION}_linux_amd64.zip" "${PRODUCT}_${TERRAFORM_VERSION}_SHA256SUMS" | sha256sum -c \
+    && unzip -o "${PRODUCT}_${TERRAFORM_VERSION}_linux_amd64.zip" -d /tmp \
+    && mv "/tmp/${PRODUCT}" /usr/local/bin/terraform \
+    && apk del .deps \
+    && rm -f /tmp/*.zip /tmp/*.sig /tmp/SHA256SUMS 2>/dev/null; true
+
+# -----------------------------------------------------------------------------
+# Stage 2: Minimal runtime image
+# -----------------------------------------------------------------------------
+FROM alpine:3.20
+ARG TERRAFORM_VERSION=1.9.6
+ARG PRODUCT=terraform
+
+LABEL org.opencontainers.image.title="Terraform (Alpine)" \
+      org.opencontainers.image.description="HashiCorp Terraform on Alpine Linux" \
+      org.opencontainers.image.version="${TERRAFORM_VERSION}"
+
+RUN addgroup -g 1000 terraform \
+    && adduser -u 1000 -G terraform -D terraform
+
+COPY --from=builder /usr/local/bin/terraform /usr/local/bin/terraform
+
+WORKDIR /workspace
+
+USER terraform
+
+ENTRYPOINT ["terraform"]
+CMD ["--help"]

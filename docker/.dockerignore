@@ -1,0 +1,5 @@
+# Reduce build context when building from docker/
+README.md
+*.md
+.git
+.gitignore

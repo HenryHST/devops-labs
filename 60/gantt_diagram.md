@@ -1,4 +1,4 @@
-# My Diagram
+# Website Development Project Schedule
 ```mermaid
 gantt
     dateFormat  YYYY-MM-DD

@@ -3,7 +3,7 @@
 This tutorial walks through how to:
 
 - Deploy a Kafka cluster within Kubernetes using Strimzi Kafka Operator
-- Enable monitoring of usefull Kafka metrics with Prometheus and Grafana
+- Enable monitoring of useful Kafka metrics with Prometheus and Grafana
 
 ## Deploy Kafka on Kubernetes (using Minikube)
 
@@ -26,7 +26,7 @@ This tutorial walks through how to:
 2. Apply terraform script to create the namespace and install Strimzi Kafka Operator
 
     ``` bash
-    terraform apply --autor-approve
+    terraform apply --auto-approve
     ```
 
 3. Apply kubernetes yamls to create kafka resources:

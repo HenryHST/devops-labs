@@ -1,0 +1,51 @@
+# syntax=docker/dockerfile:1
+# Multi-stage Dockerfile for OpenTofu on Alpine (best practices)
+# Does not rely on ghcr.io; downloads binary from GitHub releases and verifies SHA256.
+# Build: docker build -f docker/Dockerfile.opentofu -t opentofu:1.9.1 .
+# Run:   docker run --rm -v "$(pwd):/workspace" -w /workspace opentofu:1.9.1 version
+
+ARG OPENTOFU_VERSION=1.9.1
+
+# -----------------------------------------------------------------------------
+# Stage 1: Download and verify OpenTofu binary from GitHub releases
+# -----------------------------------------------------------------------------
+FROM alpine:3.20 AS builder
+ARG OPENTOFU_VERSION
+
+RUN apk add --no-cache --virtual .deps curl unzip \
+    && cd /tmp \
+    && curl -fsSL -o "tofu_${OPENTOFU_VERSION}_linux_amd64.zip" \
+       "https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip" \
+    && curl -fsSL -o "tofu_${OPENTOFU_VERSION}_SHA256SUMS" \
+       "https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_SHA256SUMS" \
+    && grep "tofu_${OPENTOFU_VERSION}_linux_amd64.zip" "tofu_${OPENTOFU_VERSION}_SHA256SUMS" | sha256sum -c \
+    && unzip -o "tofu_${OPENTOFU_VERSION}_linux_amd64.zip" -d /tmp \
+    && mv /tmp/tofu /usr/local/bin/tofu \
+    && chmod +x /usr/local/bin/tofu \
+    && apk del .deps \
+    && rm -f /tmp/tofu_*.zip /tmp/tofu_*_SHA256SUMS 2>/dev/null || true
+
+# -----------------------------------------------------------------------------
+# Stage 2: Alpine with copied binary and optional tooling
+# -----------------------------------------------------------------------------
+FROM alpine:3.20
+ARG OPENTOFU_VERSION=1.9.1
+
+LABEL org.opencontainers.image.title="OpenTofu (Alpine)" \
+      org.opencontainers.image.description="OpenTofu on Alpine Linux" \
+      org.opencontainers.image.version="${OPENTOFU_VERSION}"
+
+RUN addgroup -g 1000 tofu \
+    && adduser -u 1000 -G tofu -D tofu
+
+COPY --from=builder /usr/local/bin/tofu /usr/local/bin/tofu
+
+# Optional: common deps for Terraform/OpenTofu workflows (git, curl)
+RUN apk add --no-cache git curl
+
+WORKDIR /workspace
+
+USER tofu
+
+ENTRYPOINT ["tofu"]
+CMD ["--help"]

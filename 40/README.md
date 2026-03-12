@@ -2,7 +2,24 @@
 
 In this tutorial, we will monitor Kubernetes audit logs using the Grafana, Loki, Promtail and Prometheus stack.
 The goal is to quickly bootstrap a security-monitored Kubernetes cluster using Kubernetes vanilla audit capability.
-Our setup is described in the figure bellew:
+Our setup is described in the figure below:
+
+```mermaid
+flowchart LR
+    subgraph Node["Minikube Node"]
+        API[kube-apiserver]
+        LOG["/var/log/kubernetes/audit/audit.log"]
+        API -->|audit policy| LOG
+    end
+    subgraph Cluster["Observability Stack"]
+        Promtail[Promtail]
+        Loki[Loki]
+        Grafana[Grafana]
+        LOG -->|scrape| Promtail
+        Promtail -->|push| Loki
+        Loki -->|datasource| Grafana
+    end
+```
 
 ## Configure Kubernetes Audit Policy
 
