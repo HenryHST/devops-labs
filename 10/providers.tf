@@ -9,7 +9,7 @@ terraform {
       version = ">= 3.1.1"
     }
   }
-  required_version = ">= 1.14.6"
+  required_version = ">= 1.14.7"
 }
 
 provider "azurerm" {
