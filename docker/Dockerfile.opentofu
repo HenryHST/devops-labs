@@ -9,7 +9,7 @@ ARG OPENTOFU_VERSION=1.9.1
 # -----------------------------------------------------------------------------
 # Stage 1: Download and verify OpenTofu binary from GitHub releases
 # -----------------------------------------------------------------------------
-FROM alpine:3.20 AS builder
+FROM alpine:3.23 AS builder
 ARG OPENTOFU_VERSION
 
 RUN apk add --no-cache --virtual .deps curl unzip \
@@ -28,7 +28,7 @@ RUN apk add --no-cache --virtual .deps curl unzip \
 # -----------------------------------------------------------------------------
 # Stage 2: Alpine with copied binary and optional tooling
 # -----------------------------------------------------------------------------
-FROM alpine:3.20
+FROM alpine:3.23
 ARG OPENTOFU_VERSION=1.9.1
 
 LABEL org.opencontainers.image.title="OpenTofu (Alpine)" \
