@@ -9,7 +9,7 @@ ARG PRODUCT=terraform
 # -----------------------------------------------------------------------------
 # Stage 1: Download and verify Terraform binary
 # -----------------------------------------------------------------------------
-FROM alpine:3.20 AS builder
+FROM alpine:3.23 AS builder
 ARG TERRAFORM_VERSION
 ARG PRODUCT
 
@@ -29,7 +29,7 @@ RUN apk add --no-cache --virtual .deps gnupg wget unzip \
 # -----------------------------------------------------------------------------
 # Stage 2: Minimal runtime image
 # -----------------------------------------------------------------------------
-FROM alpine:3.20
+FROM alpine:3.23
 ARG TERRAFORM_VERSION=1.9.6
 ARG PRODUCT=terraform
 
